@@ -1,6 +1,5 @@
 name: 'Test run '
-on: 
-  workflow_dispatch:
+on: push
 
 env:
   TEST_ENV: 'staging'
@@ -9,6 +8,7 @@ env:
 jobs:
   test_job:
     runs-on: ubuntu-latest
+
     env:
       JOB_ENV: 'production'
       testvar: 'hi'
@@ -19,3 +19,22 @@ jobs:
           echo "JOB_ENV: $JOB_ENV"
           echo "testvar: $testvar"
           echo "testvar from env context: ${{ env.testvar }}"
+      - name: 'Create a Artifact'
+        run: |
+          echo "This is a test artifact" > artifact.txt
+      - uses: actions/upload-artifact@v3
+        with:
+            name: test-artifact
+            path: artifact.txt
+            retention-days: 5
+  
+  test_job_2:
+    runs-on: ubuntu-latest
+    needs: test_job 
+    steps:
+      - name: 'Download Artifact'
+        uses: actions/download-artifact@v3
+        with:
+            name: test-artifact
+      - run: |
+          cat artifact.txt
