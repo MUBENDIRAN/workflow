@@ -6,6 +6,13 @@ env:
   testvar: 'hello'
 
 jobs:
+  hello-self-hosted:
+    runs-on: [self-hosted, Linux, X64, gpu]
+    steps:
+      - name: 'Print a message'
+        run: echo "Hello from self-hosted runner!"
+      - name: 'sleep for 100 seconds'
+        run: sleep 100
   test_job:
     runs-on: ubuntu-latest
 
@@ -29,6 +36,7 @@ jobs:
             retention-days: 5
   
   test_job_2:
+    needs: test_job
     runs-on: ubuntu-latest
     steps:
       - name: 'Download Artifact'
