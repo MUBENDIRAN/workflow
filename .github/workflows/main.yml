@@ -39,6 +39,7 @@ jobs:
           cat artifact.txt
   
   deployment:
+    runs-on: ubuntu-latest
      environment: 
       name: 'test'
       url: https://github.com
