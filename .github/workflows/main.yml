@@ -30,7 +30,6 @@ jobs:
   
   test_job_2:
     runs-on: ubuntu-latest
-    needs: test_job 
     steps:
       - name: 'Download Artifact'
         uses: actions/download-artifact@v4
@@ -38,3 +37,12 @@ jobs:
             name: test-artifact
       - run: |
           cat artifact.txt
+  
+  deployment:
+     environment: 
+      name: 'test'
+      url: https://github.com
+    steps:
+      - name: 'print the secret'
+        run: |
+          echo "The secret value is: ${{ secrets.MY_SECRET }}"
