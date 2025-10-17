@@ -40,7 +40,7 @@ jobs:
   
   deployment:
     runs-on: ubuntu-latest
-     environment: 
+    environment: 
       name: 'test'
       url: https://github.com
     steps:
